@@ -1,0 +1,56 @@
+{
+ "properties": {
+  "displayName": "Add VM disks to the designated Disk Encryption Set - OS disk",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+   "category": "Compute",
+   "createdBy": "336bbb8e-64dc-493b-b62f-421b961c57f9",
+   "createdOn": "2021-10-31T11:14:59.2658791Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "diskEncryptionSetId": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Disk Encryption Set ID",
+     "description": "Resource Id of the Disk Encryption to which disks will be added.",
+     "strongType": "Microsoft.Compute/diskEncryptionSets"
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Compute/virtualMachines"
+     },
+     {
+      "field": "Microsoft.Compute/virtualMachines/storageProfile.osDisk.managedDisk.diskEncryptionSet.id",
+      "notEquals": "[parameters('diskEncryptionSetId')]"
+     }
+    ]
+   },
+   "then": {
+    "effect": "modify",
+    "details": {
+     "roleDefinitionIds": [
+      "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+     ],
+     "operations": [
+      {
+       "operation": "addOrReplace",
+       "field": "Microsoft.Compute/virtualMachines/storageProfile.osDisk.managedDisk.diskEncryptionSet.id",
+       "value": "[parameters('diskEncryptionSetId')]"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/e5216896-13b9-4e5f-8329-219f25e65d74/providers/Microsoft.Authorization/policyDefinitions/bcf71411-52ef-450c-960c-b9286e327195",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "bcf71411-52ef-450c-960c-b9286e327195"
+}

@@ -1,0 +1,32 @@
+name: manage-azure-policy-09feff71
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'exportedpolicy/policies/Add_VM_disks_to_the_designated_Disk_Encryption_Set_-_OS_disk_bcf71411-52ef-450c-960c-b9286e327195/**'
+#      - .github/workflows/manage-azure-policy-09feff71.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_09feff71}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          exportedpolicy/policies/Add_VM_disks_to_the_designated_Disk_Encryption_Set_-_OS_disk_bcf71411-52ef-450c-960c-b9286e327195/**
