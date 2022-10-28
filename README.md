@@ -1,8 +1,7 @@
 # pol-driven-gov-demo
 
 ## Custom policies
-See /exportedpolicies/
-Includes:
+See /exportedpolicies/. Includes:
 - Automated AD domain join
 - Automating enabling VMs for host-based encryption, which - alongside SSE on disks - provides the equivalent of ADE/bitlocker/dmcrypt etc for encryption at rest, encrytion in place (hypervisor process/memory), and in transit (between running VM and disk) without performance overhead.
 - Enabling VM OS and other managed disks for Server Side Encyption (ading to existing Disk Encryption Set)
