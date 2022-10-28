@@ -1,0 +1,48 @@
+{
+ "properties": {
+  "displayName": "Configure VM EncryptionAtHost",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "This policy deploys Azure Encryption at Host which is a modern, more flexible, and more performant alternative to Azure Disk Encryption.",
+  "metadata": {
+   "category": "Security Center",
+   "createdBy": "336bbb8e-64dc-493b-b62f-421b961c57f9",
+   "createdOn": "2021-11-05T00:43:15.3498421Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Compute/virtualMachines"
+     },
+     {
+      "field": "Microsoft.Compute/virtualMachines/securityProfile.encryptionAtHost",
+      "notEquals": "true"
+     }
+    ]
+   },
+   "then": {
+    "effect": "modify",
+    "details": {
+     "roleDefinitionIds": [
+      "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+     ],
+     "operations": [
+      {
+       "operation": "addOrReplace",
+       "field": "Microsoft.Compute/virtualMachines/securityProfile.encryptionAtHost",
+       "value": true
+      }
+     ]
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/e5216896-13b9-4e5f-8329-219f25e65d74/providers/Microsoft.Authorization/policyDefinitions/85373c99-d641-4d7c-b5c3-221139844e64",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "85373c99-d641-4d7c-b5c3-221139844e64"
+}
