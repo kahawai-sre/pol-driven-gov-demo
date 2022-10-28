@@ -1,0 +1,32 @@
+name: manage-azure-policy-48656a81
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'exportedpolicy/policies/Deploy_Windows_Domain_Join_Extension_with_keyvault_configuration_37323a42-40cf-4cee-b8f5-3c1a06792956/**'
+#      - .github/workflows/manage-azure-policy-48656a81.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_48656a81}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          exportedpolicy/policies/Deploy_Windows_Domain_Join_Extension_with_keyvault_configuration_37323a42-40cf-4cee-b8f5-3c1a06792956/**
